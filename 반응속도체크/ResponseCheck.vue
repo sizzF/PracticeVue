@@ -31,7 +31,6 @@
                 this.message='클릭해서 시작하세요!';
                 this.state='waiting';
             },
-
             onClickScreen(){
                 if (this.state === 'waiting'){
                     this.state='ready';
