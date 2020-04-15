@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>끝말잇기</title>
+</head>
+<body>
+    <div id="root">
+        <word-relay start-word="승민"></word-relay>
+        <word-relay start-word="바보"></word-relay>
+        <word-relay start-word="초밥"></word-relay>
+
+    </div>
+    <script>
+        //자바스크립트에스는 파스칼(WordWrod), 카멜 케이스(wordWrod)로 쓰고 html쪽에서는 무조껀 케밥케이스(word-word)로 쓰자
+        Vue.component('word-relay', { // 전역컨포넌트임
+            template: `
+            <div>
+                <div>{{word}} 다음은?</div>
+                <form v-on:submit="onSubmitForm">
+                    <input type="text" ref="answer" v-model="value">
+                    <button type="submit">입력</button>
+                </form>
+                <div id="result">{{result}}</div>
+            </div>
+            `,
+            props: ['startWord'],
+            data() {
+                return {
+                    word: this.startWord ,
+                    value: "",
+                    result: "",
+                }
+            },
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+
+                    if (this.word[this.word.length - 1] === this.value[0]) {
+                        this.word = this.value;
+                        this.value = "";
+                        this.result = "정답";
+                        this.$refs.answer.focus();
+                    } else {
+                        this.value = "";
+                        this.result = "땡";
+                        this.$refs.answer.focus();
+                    }
+                }
+            },
+        });
+        const app = new Vue({
+            el: "#root",
+        });
+    </script>
+</body>
+</html>

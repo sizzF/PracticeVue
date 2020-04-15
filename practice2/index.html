@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>좋아요</title>
+</head>
+<body>
+<div id="root">
+    <div v-if="liked">
+        <span>좋아요 눌렀음</span>
+        <button v-on:click="onClickButton">unLike</button>
+    </div>
+    <div v-else>
+        <span>좋아요 취소</span>
+        <button v-on:click="onClickButton">Like</button>    
+    </div>
+</div>
+
+
+
+<script src="index.js"></script>
+</body>
+</html>

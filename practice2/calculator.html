@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>끝말잇기</title>
+</head>
+<body>
+<div id="root">
+    <div>{{word}} 다음은?</div>
+    <form v-on:submit="onSubmitForm">
+        <input type="text" ref="answer" v-model="value">
+        <button type="submit">입력</button>
+    </form>
+    <div id="result">{{result}}</div>
+
+
+</div>
+<script>
+    const app = new Vue({
+        el: "#root",
+        data:{
+            start:false,
+            word: "",
+            value: "",
+            result: "",
+
+        },
+        methods:{
+            onSubmitForm(e){
+                e.preventDefault();
+                if (!this.start){
+                    this.start=true;
+                    this.word=this.value;
+                    this.value=""
+                }
+                else{
+                    this.result="in";
+                    let word_length=this.word.length;
+                    if (this.word.slice(word_length-1, word_length)===this.value.slice(0,1)){
+                        this.word=this.value;
+                        this.value="";
+                        this.result="정답";
+                        this.$refs.answer.focus();
+                    }else{
+                        this.value="";
+                        this.result="땡";
+                        this.$refs.answer.focus();
+                    }
+                }
+
+
+            }
+        }
+    })
+</script>
+</body>
+</html>
