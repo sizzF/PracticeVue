@@ -4,6 +4,15 @@ const path = require('path');
 module.exports = {
     mode: 'development',
     devtool: 'eval',
+
+    devServer: {
+        inline: true,
+        overlay: true,
+        host: '0.0.0.0',
+        historyApiFallback: true,
+    },
+
+
     resolve: {
         extensions: ['.js', '.vue']
     },
@@ -16,7 +25,14 @@ module.exports = {
         rules: [{
             test: /\.vue$/,
             loader: 'vue-loader',
-        }],
+        },  {
+            test: /\.css$/,
+            loader: [
+                'vue-style-loader',
+                'css-loader',
+            ]
+            }
+        ],
     },
 
     plugins: [
