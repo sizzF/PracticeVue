@@ -1,11 +1,14 @@
 <template>
-    <div>
+    <div><!--가장 최상위는 template으로 못함 처음껀 div로 해야함 나중에 하는 방법이 있낀하다고함-->
         <div id="screen" :class="state" @click="onClickScreen">{{message}}</div>
         <div>
-            <div>반응시간 : {{result[result.length-1] || 0}}ms</div>
-            <div>평균시간 : {{result.reduce((a, c) => a+c, 0) / result.length || 0}}ms</div>
-            <button @click="onReset">리셋</button>
-            <div>정상 범위 : 200ms ~ 300ms</div>
+            <!--v-if는 테그자체가 존재하지않고 v-show는 태그는 있지만 display:none으로 되어있음 이차이 보통은 v-if를 더 많이 쓴다-->
+            <template v-if="result.length"> <!--div로 묶어서 굳이 하고싶지않으면 template으로 묶어서 없는걸로 치는것처럼 할수있다.-->
+                <div>반응시간 : {{responseTime}}ms</div>
+                <div>평균시간 : {{average}}ms</div>
+                <button @click="onReset">리셋</button>
+                <div>정상 범위 : 200ms ~ 300ms</div>
+            </template>
 
 
         </div>
@@ -24,6 +27,14 @@
                 state: "waiting",
                 message: "클릭해서 시작하세요!",
             }
+        },
+        computed: { //computed는 캐싱이됨 이부분말고 다른게 바뀔때는 캐싱되어있기때문에 다시 계산을 안해도됨
+            average(){
+                return this.result.reduce((a, c) => a+c, 0) / this.result.length || 0;
+            },
+            responseTime(){
+                return this.result[this.result.length-1] || 0;
+            },
         },
         methods:{
             onReset(){

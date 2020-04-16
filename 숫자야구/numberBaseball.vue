@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>숫자야구 게임</h1>
         <h1>{{result}}</h1>
         <form @submit.prevent="onSubmitForm">
             <input type="text" minlength="4" maxlength="4" ref="answer" v-model="value" />
