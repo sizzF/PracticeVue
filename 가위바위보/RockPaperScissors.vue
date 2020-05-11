@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="computer" :style="computedStyleObject"></div>
-        <div>
+        <div v-if="startGame">
             <Button v-on:click="onClickButton('바위')">바위</Button>
             <Button @click="onClickButton('보')">보</Button>
             <Button @click="onClickButton('가위')">가위</Button>
@@ -35,6 +35,7 @@
                 result: "버튼을 눌러 승부를 겨뤄보세요",
                 score: 0,
                 imgCord: rspCords.바위,
+                startGame: true,
             }
         },
         computed: { //computed는 캐싱이됨 이부분말고 다른게 바뀔때는 캐싱되어있기때문에 다시 계산을 안해도됨
@@ -59,6 +60,7 @@
                 }, 100);
             },
             onClickButton(choice){
+                this.startGame = false;
                 clearInterval(interval);
                 const myScore = scores[choice];
                 const computerScore = scores[computerChoice(this.imgCord)];
@@ -74,7 +76,8 @@
                 }
                 setTimeout(() => {
                     this.changeHand();
-                }, 1000)
+                    this.startGame=true;
+                }, 750)
             },
         },
         created() {

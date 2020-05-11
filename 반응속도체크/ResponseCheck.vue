@@ -50,7 +50,7 @@
                         this.state='now';
                         this.message='지금 클릭!';
                         startTime = new Date();
-                    }, Math.floor(Math.random() *1000) + 2000);
+                    }, Math.floor(Math.random() *1000) + 2000)x;
                 }
                 else if (this.state ==='ready'){
                     this.state='waiting';
