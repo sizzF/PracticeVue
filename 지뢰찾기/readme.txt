@@ -1,1 +1,1 @@
-sotre.js 파일 깨짐 개빡친다
+sotre.js 파일 깨짐 
