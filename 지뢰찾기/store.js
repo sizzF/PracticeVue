@@ -96,10 +96,10 @@ export default new Vuex.Store({ //import storeABC from './store';
                 {
                     return;
                 }
-                if(checked.includes[row + '/' +cell]){
+                if(checked.includes(row + '/' +cell)){
                     return ;
                 }else{
-                    checked.push(row + '/' +'cell');
+                    checked.push(row + '/' +cell);
                 }
                 let around = [];
                 if(state.tableData[row-1]){
