@@ -63,6 +63,7 @@ export default new Vuex.Store({ //import storeABC from './store';
         timer: 0,
         halted: true, // 중단된
         result: '',
+        openedCount: 0,
     },//Vue의 data 속성과 비슷
     getters: {
         turnMessage(state) {
@@ -83,8 +84,10 @@ export default new Vuex.Store({ //import storeABC from './store';
             state.halted = false;
             state.openedCount = 0;
             state.result = '';
+            state.openedCount = 0;
         },
         [OPEN_CELL](state, { row, cell }) {
+            let openedCount = 0;
             const checked = [];
             
             function checkAround(row, cell){
@@ -106,6 +109,8 @@ export default new Vuex.Store({ //import storeABC from './store';
                     around = around.concat([
                         state.tableData[row-1][cell-1], state.tableData[row-1][cell], state.tableData[row-1][cell+1]
                     ]);
+                    console.log(state.tableData[row-1][cell+1])
+
                 }
                 around = around.concat([
                     state.tableData[row][cell-1], state.tableData[row][cell+1]
@@ -139,11 +144,24 @@ export default new Vuex.Store({ //import storeABC from './store';
                         }
                     });
                 }
+                if (state.tableData[row][cell] === CODE.NORMAL){
+                    openedCount += 1;
+                }
                 Vue.set(state.tableData[row], cell, counted.length);
               
             };
             
             checkAround(row, cell);
+
+            let halted = false;
+            let result = '';
+            if(state.data.row * state.data.cell - state.data.mine === state.openedCount + openedCount){
+                halted = true;
+                result = state.timer + '초만에 승리했습니다.';
+            }
+            state.openedCount += openedCount;
+            state.halted = halted;
+            state.result = result;
         },
         [CLICK_MINE](state, { row, cell }) {
             Vue.set(state.tableData[row], cell, CODE.CLICKED_MINE);
